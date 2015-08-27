@@ -16,7 +16,7 @@ t_DIVIDE    =   r'\&'
 t_EQUALS    =   r'\='
 t_LPAREN    =   r'\('
 t_RPAREN    =   r'\)'
-t_ignore_COMMENT = r'\//.*' # ignore the comment
+t_COMMENT = r'\//.*' # ignore the comment
 #t_ignore_COMMENT = r'\/*.*/*' # ignore the comment
 
 # Regular expression for ID #
@@ -46,21 +46,26 @@ def t_error(t):
 # Build the lexer #
 lexer = lex.lex()
 
-# Test it out
-data = '_TESTID_ = ((2 @ 8) # 10) &20 //test comment'
-
-# Give the lexer some input
-lexer.input(data)
-
-# Tokenize
-print("TOKENS:")
-while True:
-    tok = lexer.token()
-    if not tok:
-        break      # No more input
-    #print(tok)
-    print(tok.type, tok.value, tok.lineno, tok.lexpos)
+#######################
+# READ DATA FROM FILE #
+#######################
+def readFromFile():
+    f = open('ula_samples/var_assigns.ula', 'r')
+    for line in f:
+        print (line)
+        lexer.input(line) #input line of data to lexer
 
 #RUN MAIN
 if __name__ == '__main__':
     print("=========================")
+    print("READING FILE:")
+    readFromFile()
+
+    # Tokenize
+    print("TOKENS:")
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break      # No more input
+        #print(tok)
+        print(tok.type, tok.value, tok.lineno, tok.lexpos)
