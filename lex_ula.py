@@ -6,7 +6,7 @@ __author__ = 'Alon Bresler'
 import ply.lex as lex
 
 # List of token names #
-tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'COMMENT2', 'WHITESPACE')
+tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'START_COMMENT', 'END_COMMENT', 'WHITESPACE')
 
 # Regular expression rules for tokens #
 t_PLUS      =   r'\@'
@@ -16,10 +16,9 @@ t_DIVIDE    =   r'\&'
 t_EQUALS    =   r'\='
 t_LPAREN    =   r'\('
 t_RPAREN    =   r'\)'
-t_COMMENT = r'\//.+'
-t_COMMENT2 = r'/* . */'
+#t_COMMENT = r'//[^\n]*'
+#t_COMMENT2 = r'/* . */'
 #t_ignore_COMMENT = r'\/*.*/*' # ignore the comment
-
 
 # Regular expression for ID #
 def t_ID(t):
@@ -30,12 +29,15 @@ def t_WHITESPACE(t):
     r'\s+'
     return t
 
-#
+# Regular expression for COMMENT
+def t_COMMENT(t):
+    #r'(/\*.*|.*\*/)|(//.*)'
+    r'(/\*  (.|\n)*? \*/) |(//.*)'
+    return t
 
 # A regular expression rule with some action code #
 def t_FLOAT_LITERAL(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
     return t
 
 # Define a rule so we can track line numbers #
@@ -88,6 +90,9 @@ def tokenize():
         # Print out whitespace
         elif tok.type == 'WHITESPACE':
             print('WHITESPACE')
+        #Print out when COMMENT
+        elif tok.type == "COMMENT":
+            print(tok.type)
 
 
 #######################
