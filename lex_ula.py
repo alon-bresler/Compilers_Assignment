@@ -85,5 +85,5 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile('ula_samples/var_assigns.ula')
+    readFromFile('ula_samples/testFile.ula')
 
