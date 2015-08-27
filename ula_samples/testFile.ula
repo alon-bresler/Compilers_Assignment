@@ -1,1 +1,7 @@
 11testname=3
+
+// so this is a normal comment
+
+/* ok
+new line
+end line */

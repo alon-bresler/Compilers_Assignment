@@ -16,9 +16,6 @@ t_DIVIDE    =   r'\&'
 t_EQUALS    =   r'\='
 t_LPAREN    =   r'\('
 t_RPAREN    =   r'\)'
-#t_COMMENT = r'//[^\n]*'
-#t_COMMENT2 = r'/* . */'
-#t_ignore_COMMENT = r'\/*.*/*' # ignore the comment
 
 # Regular expression for ID #
 def t_ID(t):
@@ -31,8 +28,7 @@ def t_WHITESPACE(t):
 
 # Regular expression for COMMENT
 def t_COMMENT(t):
-    #r'(/\*.*|.*\*/)|(//.*)'
-    r'(/\*  (.|\n)*? \*/) |(//.*)'
+    r'(/\*(.|\n)*?\*/) |(//.*)'
     return t
 
 # A regular expression rule with some action code #
@@ -41,9 +37,9 @@ def t_FLOAT_LITERAL(t):
     return t
 
 # Define a rule so we can track line numbers #
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+#def t_newline(t):
+ #   r'\n+'
+  #  t.lexer.lineno += len(t.value)
 
 # A string containing ignored characters (spaces and tabs) #
 #t_ignore  = ' \t'
@@ -100,10 +96,12 @@ def tokenize():
 #######################
 def readFromFile(file):
     f = open(file, 'r')
+    data = ""
     for line in f:
-        #print (line)
-        lexer.input(line) #input line of data to lexer
-        tokenize()
+        data = data + line
+
+    lexer.input(data)
+    tokenize()
 
 #RUN MAIN
 if __name__ == '__main__':
