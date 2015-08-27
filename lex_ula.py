@@ -3,15 +3,23 @@ __author__ = 'Alon'
 import ply.lex as lex
 
 # List of token names #
-tokens = ('NUMBER', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'LPAREN', 'RPAREN')
+tokens = ('NUMBER', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT')
 
 # Regular expression rules for tokens #
 t_PLUS      =   r'\@'
 t_MINUS     =   r'\$'
 t_TIMES     =   r'\#'
 t_DIVIDE    =   r'\&'
+t_EQUALS    =   r'\='
 t_LPAREN    =   r'\('
 t_RPAREN    =   r'\)'
+t_ignore_COMMENT = r'\//.*' # ignore the comment
+#t_ignore_COMMENT = r'\/*.*/*' # ignore the comment
+
+# Regular expression for ID #
+def t_ID(t):
+    r'_[a-zA-Z][a-zA-Z0-9]*_' #id must start and end with a _
+    return t
 
 # A regular expression rule with some action code #
 def t_NUMBER(t):
@@ -36,10 +44,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''
-3 @ 4 # 10
-  @ $20 #2
-'''
+data = '_TESTID_ = ((2 @ 8) # 10) &20 //test comment'
 
 # Give the lexer some input
 lexer.input(data)
@@ -52,3 +57,7 @@ while True:
         break      # No more input
     #print(tok)
     print(tok.type, tok.value, tok.lineno, tok.lexpos)
+
+#RUN MAIN
+if __name__ == '__main__':
+    print("This is now running")
