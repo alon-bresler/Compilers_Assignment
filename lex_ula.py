@@ -63,15 +63,30 @@ def tokenize():
         #print(tok)
         #print(tok.type, tok.value, tok.lineno, tok.lexpos)
 
+        # Printing out arithmetic symbols
+        if tok.type == 'PLUS':
+            print('@')
+        elif tok.type == 'MINUS':
+            print('$')
+        elif tok.type == 'TIMES':
+            print('#')
+        elif tok.type == 'DIVIDE':
+            print('&')
+        # Printint parens
+        elif tok.type == 'LPAREN':
+            print('(')
+        elif tok.type == 'RPAREN':
+            print(')')
         # How to print out IDs and FLOAT_LITERALS
-        if tok.type == 'ID' or tok.type == 'FLOAT_LITERAL':
+        elif tok.type == 'ID' or tok.type == 'FLOAT_LITERAL':
             print(tok.type + "," + str(tok.value))
         # Just print equal sign
-        if tok.type == 'EQUALS':
+        elif tok.type == 'EQUALS':
             print('=')
         # Print out whitespace
-        if tok.type == 'WHITESPACE':
+        elif tok.type == 'WHITESPACE':
             print('WHITESPACE')
+
 
 #######################
 # READ DATA FROM FILE #
@@ -85,5 +100,5 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile('ula_samples/testFile.ula')
+    readFromFile('ula_samples/exprs.ula')
 
