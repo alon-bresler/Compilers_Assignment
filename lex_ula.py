@@ -1,4 +1,7 @@
-__author__ = 'Alon'
+# Compiler Assignment 1 - lex_ula.py
+# CSC3003S
+# 14/09/2015
+__author__ = 'Alon Bresler'
 
 import ply.lex as lex
 
