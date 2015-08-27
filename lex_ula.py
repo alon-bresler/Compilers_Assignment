@@ -6,7 +6,7 @@ __author__ = 'Alon Bresler'
 import ply.lex as lex
 
 # List of token names #
-tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'START_COMMENT', 'END_COMMENT', 'WHITESPACE')
+tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'WHITESPACE')
 
 # Regular expression rules for tokens #
 t_PLUS      =   r'\@'
@@ -107,5 +107,5 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile('ula_samples/floats.ula')
+    readFromFile('ula_samples/comments.ula')
 
