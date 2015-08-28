@@ -5,6 +5,9 @@ __author__ = 'Alon Bresler'
 
 import ply.lex as lex
 
+# Name of the program file
+programName = ''
+
 # List of token names #
 tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'WHITESPACE')
 
@@ -56,6 +59,11 @@ lexer = lex.lex()
 # TOKENIZE AND PRINT#
 #####################
 def tokenize():
+
+    #open the file
+    words = programName.split('.')
+    f = open(words[0] + ".tkn", 'w')
+
     while True:
         tok = lexer.token()
         if not tok:
@@ -66,29 +74,45 @@ def tokenize():
         # Printing out arithmetic symbols
         if tok.type == 'PLUS':
             print('@')
+            f.write('@')
         elif tok.type == 'MINUS':
             print('$')
+            f.write('$')
         elif tok.type == 'TIMES':
             print('#')
+            f.write('#')
         elif tok.type == 'DIVIDE':
             print('&')
+            f.write('&')
         # Printint parens
         elif tok.type == 'LPAREN':
             print('(')
+            f.write('(')
         elif tok.type == 'RPAREN':
             print(')')
+            f.write(')')
         # How to print out IDs and FLOAT_LITERALS
         elif tok.type == 'ID' or tok.type == 'FLOAT_LITERAL':
             print(tok.type + "," + str(tok.value))
+            f.write(tok.type + "," + str(tok.value))
         # Just print equal sign
         elif tok.type == 'EQUALS':
             print('=')
+            f.write('=')
         # Print out whitespace
         elif tok.type == 'WHITESPACE':
             print('WHITESPACE')
+            f.write('WHITESPACE')
         #Print out when COMMENT
         elif tok.type == "COMMENT":
             print(tok.type)
+            f.write(tok.type)
+
+        # write a new line at the end of each while loop
+        f.write('\n')
+
+    # close the file - done writing
+    f.close()
 
 
 #######################
@@ -105,5 +129,6 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile('ula_samples/comments.ula')
+    programName = 'ula_samples/numbers.ula'
+    readFromFile(programName)
 
