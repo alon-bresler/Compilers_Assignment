@@ -74,39 +74,29 @@ def tokenize():
 
         # Printing out arithmetic symbols
         if tok.type == 'PLUS':
-            print('@')
             f.write('@')
         elif tok.type == 'MINUS':
-            print('$')
             f.write('$')
         elif tok.type == 'TIMES':
-            print('#')
             f.write('#')
         elif tok.type == 'DIVIDE':
-            print('&')
             f.write('&')
         # Printint parens
         elif tok.type == 'LPAREN':
-            print('(')
             f.write('(')
         elif tok.type == 'RPAREN':
-            print(')')
             f.write(')')
         # How to print out IDs and FLOAT_LITERALS
         elif tok.type == 'ID' or tok.type == 'FLOAT_LITERAL':
-            print(tok.type + "," + str(tok.value))
             f.write(tok.type + "," + str(tok.value))
         # Just print equal sign
         elif tok.type == 'EQUALS':
-            print('=')
             f.write('=')
         # Print out whitespace
         elif tok.type == 'WHITESPACE':
-            print('WHITESPACE')
             f.write('WHITESPACE')
         #Print out when COMMENT
         elif tok.type == "COMMENT":
-            print(tok.type)
             f.write(tok.type)
 
         # write a new line at the end of each while loop
@@ -120,7 +110,8 @@ def tokenize():
 # READ DATA FROM FILE #
 #######################
 def readFromFile(file):
-    f = open(file, 'r')
+    programName = file
+    f = open(programName, 'r')
     data = ""
     for line in f:
         data = data + line
@@ -130,6 +121,5 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    programName = sys.argv[1]
-    readFromFile(programName)
+    readFromFile(sys.argv[1])
 
