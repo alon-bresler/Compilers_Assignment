@@ -28,7 +28,7 @@ def p_expression_group(p):
     p[0] = ('group-expression',p[2])
 
 def p_expression_number(p):
-    'expression : NUMBER'
+    'expression : FLOAT_LITERAL'
     p[0] = ('number-expression',p[1])
 
 # Error rule for syntax errors
@@ -46,3 +46,11 @@ while True:
    if not s: continue
    result = parser.parse(s)
    print(result)
+
+#def readFromFile(file):
+#    f = open(file, 'r')
+#    data = ""
+#    for line in f:
+#        data = data + line
+
+#    lexer.input(data)

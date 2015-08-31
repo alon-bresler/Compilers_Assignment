@@ -5,6 +5,7 @@ Unused terminals:
     COMMENT
     EQUALS
     ID
+    WHITESPACE
 
 Grammar
 
@@ -14,20 +15,21 @@ Rule 2     expression -> expression MINUS expression
 Rule 3     expression -> expression TIMES expression
 Rule 4     expression -> expression DIVIDE expression
 Rule 5     expression -> LPAREN expression RPAREN
-Rule 6     expression -> NUMBER
+Rule 6     expression -> FLOAT_LITERAL
 
 Terminals, with rules where they appear
 
 COMMENT              : 
 DIVIDE               : 4
 EQUALS               : 
+FLOAT_LITERAL        : 6
 ID                   : 
 LPAREN               : 5
 MINUS                : 2
-NUMBER               : 6
 PLUS                 : 1
 RPAREN               : 5
 TIMES                : 3
+WHITESPACE           : 
 error                : 
 
 Nonterminals, with rules where they appear
@@ -44,26 +46,14 @@ state 0
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 3
 
 state 1
-
-    (6) expression -> NUMBER .
-
-    RPAREN          reduce using rule 6 (expression -> NUMBER .)
-    PLUS            reduce using rule 6 (expression -> NUMBER .)
-    MINUS           reduce using rule 6 (expression -> NUMBER .)
-    TIMES           reduce using rule 6 (expression -> NUMBER .)
-    DIVIDE          reduce using rule 6 (expression -> NUMBER .)
-    $end            reduce using rule 6 (expression -> NUMBER .)
-
-
-state 2
 
     (5) expression -> LPAREN . expression RPAREN
     (1) expression -> . expression PLUS expression
@@ -71,12 +61,24 @@ state 2
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 4
+
+state 2
+
+    (6) expression -> FLOAT_LITERAL .
+
+    PLUS            reduce using rule 6 (expression -> FLOAT_LITERAL .)
+    MINUS           reduce using rule 6 (expression -> FLOAT_LITERAL .)
+    TIMES           reduce using rule 6 (expression -> FLOAT_LITERAL .)
+    DIVIDE          reduce using rule 6 (expression -> FLOAT_LITERAL .)
+    $end            reduce using rule 6 (expression -> FLOAT_LITERAL .)
+    RPAREN          reduce using rule 6 (expression -> FLOAT_LITERAL .)
+
 
 state 3
 
@@ -115,10 +117,10 @@ state 5
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 10
 
@@ -130,10 +132,10 @@ state 6
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 11
 
@@ -145,10 +147,10 @@ state 7
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 12
 
@@ -160,10 +162,10 @@ state 8
     (3) expression -> . expression TIMES expression
     (4) expression -> . expression DIVIDE expression
     (5) expression -> . LPAREN expression RPAREN
-    (6) expression -> . NUMBER
+    (6) expression -> . FLOAT_LITERAL
 
-    LPAREN          shift and go to state 2
-    NUMBER          shift and go to state 1
+    LPAREN          shift and go to state 1
+    FLOAT_LITERAL   shift and go to state 2
 
     expression                     shift and go to state 13
 
@@ -171,12 +173,12 @@ state 9
 
     (5) expression -> LPAREN expression RPAREN .
 
-    RPAREN          reduce using rule 5 (expression -> LPAREN expression RPAREN .)
     PLUS            reduce using rule 5 (expression -> LPAREN expression RPAREN .)
     MINUS           reduce using rule 5 (expression -> LPAREN expression RPAREN .)
     TIMES           reduce using rule 5 (expression -> LPAREN expression RPAREN .)
     DIVIDE          reduce using rule 5 (expression -> LPAREN expression RPAREN .)
     $end            reduce using rule 5 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 5 (expression -> LPAREN expression RPAREN .)
 
 
 state 10
@@ -187,10 +189,10 @@ state 10
     (3) expression -> expression . TIMES expression
     (4) expression -> expression . DIVIDE expression
 
-    RPAREN          reduce using rule 1 (expression -> expression PLUS expression .)
     PLUS            reduce using rule 1 (expression -> expression PLUS expression .)
     MINUS           reduce using rule 1 (expression -> expression PLUS expression .)
     $end            reduce using rule 1 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 1 (expression -> expression PLUS expression .)
     TIMES           shift and go to state 8
     DIVIDE          shift and go to state 6
 
@@ -208,12 +210,12 @@ state 11
     (3) expression -> expression . TIMES expression
     (4) expression -> expression . DIVIDE expression
 
-    RPAREN          reduce using rule 4 (expression -> expression DIVIDE expression .)
     PLUS            reduce using rule 4 (expression -> expression DIVIDE expression .)
     MINUS           reduce using rule 4 (expression -> expression DIVIDE expression .)
     TIMES           reduce using rule 4 (expression -> expression DIVIDE expression .)
     DIVIDE          reduce using rule 4 (expression -> expression DIVIDE expression .)
     $end            reduce using rule 4 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 4 (expression -> expression DIVIDE expression .)
 
   ! PLUS            [ shift and go to state 5 ]
   ! MINUS           [ shift and go to state 7 ]
@@ -229,10 +231,10 @@ state 12
     (3) expression -> expression . TIMES expression
     (4) expression -> expression . DIVIDE expression
 
-    RPAREN          reduce using rule 2 (expression -> expression MINUS expression .)
     PLUS            reduce using rule 2 (expression -> expression MINUS expression .)
     MINUS           reduce using rule 2 (expression -> expression MINUS expression .)
     $end            reduce using rule 2 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 2 (expression -> expression MINUS expression .)
     TIMES           shift and go to state 8
     DIVIDE          shift and go to state 6
 
@@ -250,12 +252,12 @@ state 13
     (3) expression -> expression . TIMES expression
     (4) expression -> expression . DIVIDE expression
 
-    RPAREN          reduce using rule 3 (expression -> expression TIMES expression .)
     PLUS            reduce using rule 3 (expression -> expression TIMES expression .)
     MINUS           reduce using rule 3 (expression -> expression TIMES expression .)
     TIMES           reduce using rule 3 (expression -> expression TIMES expression .)
     DIVIDE          reduce using rule 3 (expression -> expression TIMES expression .)
     $end            reduce using rule 3 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 3 (expression -> expression TIMES expression .)
 
   ! PLUS            [ shift and go to state 5 ]
   ! MINUS           [ shift and go to state 7 ]
