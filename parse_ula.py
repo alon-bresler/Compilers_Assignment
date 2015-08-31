@@ -15,13 +15,24 @@ precedence = (
 )
 
 # Constructing a abstract syntax tree #
-def p_expression_binop(p):
+def p_assignment(p):
+    '''assignment : ID EQUALS expression'''
+    p[0] = ('AssignStatement', p[1], p[2], p[3])
+
+def p_expression(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
                   | expression TIMES expression
                   | expression DIVIDE expression'''
 
-    p[0] = ('binary-expression',p[2],p[1],p[3])
+    if (p[2] == '@'):
+        p[0] = ('AddExpression',p[2],p[1],p[3])
+    elif (p[2] == '$'):
+        p[0] = ('SubExpression',p[2],p[1],p[3])
+    elif (p[2] == '#'):
+        p[0] = ('MulExpression',p[2],p[1],p[3])
+    elif (p[2] == '&'):
+        p[0] = ('DivExpression',p[2],p[1],p[3])
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
@@ -29,7 +40,23 @@ def p_expression_group(p):
 
 def p_expression_number(p):
     'expression : FLOAT_LITERAL'
-    p[0] = ('number-expression',p[1])
+    p[0] = ('FloatExpression',p[1])
+
+# def p_assign(p):
+#     '''assignm : ID EQUALS expression'''
+#
+# def p_expression(p):
+#     '''expression : expression PLUS term
+#                   | expression MINUS term
+#                   | term'''
+#
+# def p_term(p):
+#     '''term : term TIMES factor
+#             | term DIVIDE factor
+#             | factor'''
+#
+# def p_facto(p):
+#     '''factor : FLOAT_LITERAL'''
 
 # Error rule for syntax errors
 def p_error(p):
@@ -38,14 +65,8 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-while True:
-   try:
-       s = raw_input('calc > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
+result = parser.parse('this1=1')
+print (result)
 
 #def readFromFile(file):
 #    f = open(file, 'r')
