@@ -4,6 +4,7 @@
 __author__ = 'Alon Bresler'
 
 import ply.lex as lex
+import sys #import for arguments
 
 # Name of the program file
 programName = ''
@@ -129,6 +130,6 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    programName = 'ula_samples/numbers.ula'
+    programName = sys.argv[1]
     readFromFile(programName)
 
