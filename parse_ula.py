@@ -17,7 +17,7 @@ precedence = (
 # Constructing a abstract syntax tree #
 def p_assignment(p):
     '''assignment : ID EQUALS expression'''
-    p[0] = ('AssignStatement', p[1], p[2], p[3])
+    p[0] = ('AssignStatement', p[1], p[3])
 
 def p_expression(p):
     '''expression : expression PLUS expression
@@ -26,13 +26,13 @@ def p_expression(p):
                   | expression DIVIDE expression'''
 
     if (p[2] == '@'):
-        p[0] = ('AddExpression',p[2],p[1],p[3])
+        p[0] = ('AddExpression',p[1],p[3])
     elif (p[2] == '$'):
-        p[0] = ('SubExpression',p[2],p[1],p[3])
+        p[0] = ('SubExpression',p[1],p[3])
     elif (p[2] == '#'):
-        p[0] = ('MulExpression',p[2],p[1],p[3])
+        p[0] = ('MulExpression',p[1],p[3])
     elif (p[2] == '&'):
-        p[0] = ('DivExpression',p[2],p[1],p[3])
+        p[0] = ('DivExpression',p[1],p[3])
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
@@ -65,8 +65,18 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-result = parser.parse('this1=1')
-print (result)
+result = parser.parse('this1=1@2')
+
+# if a result is returned
+if (result != None):
+    print(result)
+
+    if (result[0] == 'AssignStatement'):
+        print(result[0])
+        print('\t' + 'ID,' + result[1])
+
+
+
 
 #def readFromFile(file):
 #    f = open(file, 'r')
