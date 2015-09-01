@@ -66,9 +66,14 @@ parser = yacc.yacc()
 
 
 def processLine(line):
-    print(line)
+    result = parser.parse(line)
+    print(result)
+
 
 def readFromFile(file):
+
+   #Read in the token file and put each line into a block of an array
+   #ignoring the COMMENT and WHITESPACE lines
    prog = file.split('.')
    allData = ""
    f = open(prog[0] + '.tkn', 'r')
@@ -78,6 +83,15 @@ def readFromFile(file):
             allData = allData+ " "+line
    dataArr = allData.split(' ')
 
+    #Remove the identifiers ID and FLOAT_LITERAL
+   for i in range (0, len(dataArr)):
+        if (dataArr[i][0:2] == 'ID' or dataArr[i][0:13] == 'FLOAT_LITERAL'):
+            s = dataArr[i].split(',')
+            dataArr[i] = s[1]
+
+
+    #Go through the array and split up the array into input lines.
+   #Each line starts with an ID and an EQUALS
    lineForProcessing = ""
    for i in range (1, len(dataArr)-1):
         if (dataArr[i+1] == '='):
@@ -85,6 +99,7 @@ def readFromFile(file):
            lineForProcessing = dataArr[i]
         else:
             lineForProcessing = lineForProcessing + dataArr[i]
+   processLine(lineForProcessing + max(dataArr))
 
 
 

@@ -23,7 +23,7 @@ t_RPAREN    =   r'\)'
 
 # Regular expression for ID #
 def t_ID(t):
-    r'[_a-zA-Z][a-zA-Z0-9]*'
+    r'[_a-zA-Z][_a-zA-Z0-9]*'
     return t
 # Regular expression for WHITESPACE
 def t_WHITESPACE(t):
