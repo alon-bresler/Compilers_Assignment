@@ -11,7 +11,7 @@ import sys
 from lex_ula import tokens
 
 programName = ''
-finalString = "Start\n\tProgram\n\t\t"
+finalString = "Start\n\tProgram"
 
 # Setting precedence and associativity #
 precedence = (
@@ -74,9 +74,9 @@ def writeToFile():
 def recursiveFormat(result):
     if (len(result) == 2):
         global finalString
-        finalString += "\n\t\t\t\t" + result[0] + "\n\t\t\t\t\tFLOAT_LITERAL," + result[1]
+        finalString += "\n\t\t\t" + str(result[0]) + "\n\t\t\t\tFLOAT_LITERAL," + str(result[1])
     else:
-        finalString += "\n\t\t\t" + result[0]
+        finalString += "\n\t\t\t" + str(result[0])
         for i in range (1, len(result)):
             recursiveFormat(result[i])
 
@@ -88,12 +88,9 @@ def formatResult(result):
     #print("\t\t" + result[0])
     #print("\t\t\tID," + result[1])
     global finalString
-    finalString += result[0] + "\n\t\t\tID," + result[1]
+    finalString += "\n\t\t"+ str(result[0]) + "\n\t\t\tID," + str(result[1])
 
     recursiveFormat(result[2])
-    print(finalString)
-
-
 
 def processLine(line):
     if (line != ''):
@@ -138,14 +135,15 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    programName = 'myExamples/basicAssignment.ula'
-    lex_ula.programName = 'myExamples/basicAssignment.ula'
-    lex_ula.readFromFile('myExamples/basicAssignment.ula')
-    readFromFile('myExamples/basicAssignment.ula')
+    #programName = 'myExamples/testFile.ula'
+    #lex_ula.programName = 'myExamples/testFile.ula'
+    #lex_ula.readFromFile('myExamples/testFile.ula')
+    #readFromFile('myExamples/testFile.ula')
+    #print(finalString)
 
-    #programName = sys.argv[1]
-    #lex_ula.programName = sys.argv[1]
-    #lex_ula.readFromFile(sys.argv[1])
-    #readFromFile(sys.argv[1])
+    programName = sys.argv[1]
+    lex_ula.programName = sys.argv[1]
+    lex_ula.readFromFile(sys.argv[1])
+    readFromFile(sys.argv[1])
 
     writeToFile()

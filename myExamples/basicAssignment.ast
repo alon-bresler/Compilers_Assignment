@@ -1,12 +1,13 @@
 Start
 	Program
-		AssignStatement
+			AssignStatement
 			ID,x
 			AddExpression
 				FloatExpression
 					FLOAT_LITERAL,9
 				FloatExpression
-					FLOAT_LITERAL,1AssignStatement
+					FLOAT_LITERAL,1
+			AssignStatement
 			ID,y
 			MulExpression
 				FloatExpression
