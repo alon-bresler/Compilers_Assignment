@@ -110,8 +110,7 @@ def tokenize():
 # READ DATA FROM FILE #
 #######################
 def readFromFile(file):
-    programName = file
-    f = open(programName, 'r')
+    f = open(file, 'r')
     data = ""
     for line in f:
         data = data + line
@@ -121,5 +120,6 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile(sys.argv[1])
+    programName = sys.argv[1]
+    readFromFile(programName)
 
