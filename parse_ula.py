@@ -52,7 +52,8 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-#result = parser.parse('this1=1@2')
+#result = parser.parse('this1=1@2 another=9#9')
+#print(result)
 
 # if a result is returned
 # if (result != None):
@@ -64,15 +65,17 @@ parser = yacc.yacc()
 
 
 
+def processLine(line):
+    if (line != "COMMENT\n" and line != "WHITESPACE\n"):
+        print(line)
+
 def readFromFile(file):
    prog = file.split('.')
    f = open(prog[0] + '.tkn', 'r')
    data = ""
    for line in f:
        data = data + line
-
-   print(data)
-
+       processLine(line)
 
 
 #RUN MAIN
