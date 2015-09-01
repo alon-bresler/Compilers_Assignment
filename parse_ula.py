@@ -66,8 +66,10 @@ parser = yacc.yacc()
 
 
 def processLine(line):
-    result = parser.parse(line)
-    print(result)
+    if (line != ''):
+        print(line)
+        result = parser.parse(line)
+        print(result)
 
 
 def readFromFile(file):
@@ -84,7 +86,7 @@ def readFromFile(file):
    dataArr = allData.split(' ')
 
     #Remove the identifiers ID and FLOAT_LITERAL
-   for i in range (0, len(dataArr)):
+   for i in range (1, len(dataArr)):
         if (dataArr[i][0:2] == 'ID' or dataArr[i][0:13] == 'FLOAT_LITERAL'):
             s = dataArr[i].split(',')
             dataArr[i] = s[1]
