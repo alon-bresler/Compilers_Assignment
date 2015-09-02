@@ -60,17 +60,6 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-#result = parser.parse('this1 = 1 @ 2')
-#print(result)
-
-# if a result is returned
-# if (result != None):
-#     print(result)
-#
-#     if (result[0] == 'AssignStatement'):
-#         print(result[0])
-#         print('\t' + 'ID,' + result[1])
-
 def genTabString():
     tabs = ''
     for t in tabArr:
@@ -93,7 +82,6 @@ def recursiveFormat(result):
         elif (str(result[0]) == 'IdentifierExpression'):
             finalString += "\n" + genTabString() + "ID," + str(result[1])
 
-        #tabArr.remove(tabArr[len(tabArr)-1])
     else:
         finalString += "\n" + genTabString() + str(result[0])
         tabArr.append('\t')
@@ -157,15 +145,15 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    programName = 'myExamples/testFile.ula'
-    lex_ula.programName = 'myExamples/testFile.ula'
-    lex_ula.readFromFile('myExamples/testFile.ula')
-    readFromFile('myExamples/testFile.ula')
-    print(finalString)
+    #programName = 'myExamples/testFile.ula'
+    #lex_ula.programName = 'myExamples/testFile.ula'
+    #lex_ula.readFromFile('myExamples/testFile.ula')
+    #readFromFile('myExamples/testFile.ula')
+    #print(finalString)
 
-    #programName = sys.argv[1]
-    #lex_ula.programName = sys.argv[1]
-    #lex_ula.readFromFile(sys.argv[1])
-    #readFromFile(sys.argv[1])
+    programName = sys.argv[1]
+    lex_ula.programName = sys.argv[1]
+    lex_ula.readFromFile(sys.argv[1])
+    readFromFile(sys.argv[1])
 
     writeToFile()
