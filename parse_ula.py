@@ -40,7 +40,6 @@ def p_expression(p):
     elif (p[2] == '&'):
         p[0] = ('DivExpression',p[1],p[3])
 
-
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = ('group-expression',p[2])
@@ -60,28 +59,32 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
+# Goes through the array of tabs and returns a string of tabs
 def genTabString():
     tabs = ''
     for t in tabArr:
         tabs +=t
     return tabs
 
+# Write the AST to file
 def writeToFile():
     words = programName.split('.')
     f = open(words[0] + ".ast", 'w')
     f.write(finalString)
     f.close()
 
+# recursive go through the tree (results array) until the leaves (FLOAT_LITERALS)
 def recursiveFormat(result):
-    if (len(result) == 2):
+    if (len(result) == 2): #If it is a variable or number
         global finalString
         finalString += "\n" + genTabString() + str(result[0])
         tabArr.append('\t')
+        #FLOAT_LITERAL
         if (str(result[0]) == 'FloatExpression'):
             finalString += "\n" + genTabString() + "FLOAT_LITERAL," + str(result[1])
+        #IDENTIFIER
         elif (str(result[0]) == 'IdentifierExpression'):
             finalString += "\n" + genTabString() + "ID," + str(result[1])
-
     else:
         finalString += "\n" + genTabString() + str(result[0])
         tabArr.append('\t')
@@ -93,12 +96,15 @@ def recursiveFormat(result):
                 recursiveFormat(result[i][1])
                 tabArr.remove(tabArr[len(tabArr)-1])
 
-
+# The beginning of formatting and printing out the tree
+# lines always start with an assignment and an ID
 def formatResult(result):
     global finalString
     finalString += "\n\t\t"+ str(result[0]) + "\n\t\t\tID," + str(result[1])
-    recursiveFormat(result[2])
+    recursiveFormat(result[2]) #recursively do the rest of the tree
 
+# Start processing a line of code
+# Send it to the parser and print out AST in correct format
 def processLine(line):
     if (line != ''):
         global tabArr
@@ -106,10 +112,8 @@ def processLine(line):
         result = parser.parse(line)
         formatResult(result)
 
-
-
+# Read from file
 def readFromFile(file):
-
    #Read in the token file and put each line into a block of an array
    #ignoring the COMMENT and WHITESPACE lines
    prog = file.split('.')
@@ -120,14 +124,11 @@ def readFromFile(file):
        if (line != "COMMENT" and line != "WHITESPACE"):
             allData = allData+ " "+line
    dataArr = allData.split(' ')
-
-    #Remove the identifiers ID and FLOAT_LITERAL
+   #Remove the identifiers ID and FLOAT_LITERAL
    for i in range (1, len(dataArr)):
         if (dataArr[i][0:2] == 'ID' or dataArr[i][0:13] == 'FLOAT_LITERAL'):
             s = dataArr[i].split(',')
             dataArr[i] = s[1]
-
-
     #Go through the array and split up the array into input lines.
    #Each line starts with an ID and an EQUALS
    lineForProcessing = ""
@@ -139,21 +140,10 @@ def readFromFile(file):
             lineForProcessing = lineForProcessing + dataArr[i]
    processLine(lineForProcessing + dataArr[len(dataArr)-1])
 
-
-
-
-
 #RUN MAIN
 if __name__ == '__main__':
-    #programName = 'myExamples/testFile.ula'
-    #lex_ula.programName = 'myExamples/testFile.ula'
-    #lex_ula.readFromFile('myExamples/testFile.ula')
-    #readFromFile('myExamples/testFile.ula')
-    #print(finalString)
-
     programName = sys.argv[1]
     lex_ula.programName = sys.argv[1]
     lex_ula.readFromFile(sys.argv[1])
     readFromFile(sys.argv[1])
-
     writeToFile()
