@@ -12,6 +12,7 @@ from lex_ula import tokens
 
 programName = ''
 finalString = "Start\n\tProgram"
+tabArr = ["\t", "\t", "\t"]
 
 # Setting precedence and associativity #
 precedence = (
@@ -39,6 +40,7 @@ def p_expression(p):
     elif (p[2] == '&'):
         p[0] = ('DivExpression',p[1],p[3])
 
+
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = ('group-expression',p[2])
@@ -46,6 +48,10 @@ def p_expression_group(p):
 def p_expression_number(p):
     'expression : FLOAT_LITERAL'
     p[0] = ('FloatExpression',p[1])
+
+def p_id_expression(p):
+    'expression : ID'
+    p[0] = ('IdentifierExpression',p[1])
 
 # Error rule for syntax errors
 def p_error(p):
@@ -65,6 +71,12 @@ parser = yacc.yacc()
 #         print(result[0])
 #         print('\t' + 'ID,' + result[1])
 
+def genTabString():
+    tabs = ''
+    for t in tabArr:
+        tabs +=t
+    return tabs
+
 def writeToFile():
     words = programName.split('.')
     f = open(words[0] + ".ast", 'w')
@@ -74,28 +86,38 @@ def writeToFile():
 def recursiveFormat(result):
     if (len(result) == 2):
         global finalString
-        finalString += "\n\t\t\t" + str(result[0]) + "\n\t\t\t\tFLOAT_LITERAL," + str(result[1])
+        finalString += "\n" + genTabString() + str(result[0])
+        tabArr.append('\t')
+        if (str(result[0]) == 'FloatExpression'):
+            finalString += "\n" + genTabString() + "FLOAT_LITERAL," + str(result[1])
+        elif (str(result[0]) == 'IdentifierExpression'):
+            finalString += "\n" + genTabString() + "ID," + str(result[1])
+
+        #tabArr.remove(tabArr[len(tabArr)-1])
     else:
-        finalString += "\n\t\t\t" + str(result[0])
+        finalString += "\n" + genTabString() + str(result[0])
+        tabArr.append('\t')
         for i in range (1, len(result)):
-            recursiveFormat(result[i])
+            if (str(result[i][0]) != 'group-expression'):
+                recursiveFormat(result[i])
+                tabArr.remove(tabArr[len(tabArr)-1])
+            else:
+                recursiveFormat(result[i][1])
+                tabArr.remove(tabArr[len(tabArr)-1])
 
 
 def formatResult(result):
-    #print("Start")
-    #print("\tProgram")
-
-    #print("\t\t" + result[0])
-    #print("\t\t\tID," + result[1])
     global finalString
     finalString += "\n\t\t"+ str(result[0]) + "\n\t\t\tID," + str(result[1])
-
     recursiveFormat(result[2])
 
 def processLine(line):
     if (line != ''):
+        global tabArr
+        tabArr = ["\t", "\t", "\t"]
         result = parser.parse(line)
         formatResult(result)
+
 
 
 def readFromFile(file):
@@ -135,15 +157,15 @@ def readFromFile(file):
 
 #RUN MAIN
 if __name__ == '__main__':
-    #programName = 'myExamples/testFile.ula'
-    #lex_ula.programName = 'myExamples/testFile.ula'
-    #lex_ula.readFromFile('myExamples/testFile.ula')
-    #readFromFile('myExamples/testFile.ula')
-    #print(finalString)
+    programName = 'myExamples/testFile.ula'
+    lex_ula.programName = 'myExamples/testFile.ula'
+    lex_ula.readFromFile('myExamples/testFile.ula')
+    readFromFile('myExamples/testFile.ula')
+    print(finalString)
 
-    programName = sys.argv[1]
-    lex_ula.programName = sys.argv[1]
-    lex_ula.readFromFile(sys.argv[1])
-    readFromFile(sys.argv[1])
+    #programName = sys.argv[1]
+    #lex_ula.programName = sys.argv[1]
+    #lex_ula.readFromFile(sys.argv[1])
+    #readFromFile(sys.argv[1])
 
     writeToFile()

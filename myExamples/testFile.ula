@@ -1,3 +1,7 @@
-calc1=12@34
-calc2=48&12$6
-//calc3=24#6$(48&12)@16
+calc3=24#6$(48&12)@16
+
+/* doing some 
+calculations */
+
+val = 12
+result = val#(60$2e4) // answer
