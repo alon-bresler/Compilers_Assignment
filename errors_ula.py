@@ -4,7 +4,8 @@ import sys
 import lex_ula
 import parse_ula
 
-fileName = 'ula_error_samples/testError.ula'
+#fileName = 'ula_error_samples/testError.ula'
+fileName = ''
 
 # array to hold instantiated variable names
 varArray = []
@@ -106,5 +107,7 @@ def writeToErrorFile(errorMessage):
 if __name__ == '__main__':
     #readFromFile(fileName)
     #runLexer (fileName)
+    global fileName
+    fileName = sys.argv[1]
     readFromFile(sys.argv[1])
-    runLexer (sys.argv[1])
+    runLexer(sys.argv[1])
