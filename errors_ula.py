@@ -6,6 +6,9 @@ import parse_ula
 
 fileName = 'ula_error_samples/testError.ula'
 
+# array to hold instantiated variable names
+varArray = []
+
 #######################
 # READ DATA FROM FILE #
 #######################
@@ -50,7 +53,39 @@ def runParser(file):
 # SEMANTIC ANALYSIS #
 #####################
 def semanticAnalysis(file):
-    print("In semantic")
+    words = file.split('.')
+    f = open(words[0] + ".ast", 'r')
+
+    isAssignment = False
+
+    for line in f:
+        if (isAssignment):
+            ID = line.split(',')
+            if (addVarToList(ID[1]) == False):
+                print("error")
+            isAssignment = False
+        if (line.strip() == "AssignStatement"):
+            isAssignment = True
+
+##################################################
+# ADD NEW VARIABLE NAME TO THE LIST OF VARIABLES #
+##################################################
+def addVarToList(var):
+    if(checkForVarInList(var)):
+        return False
+    else:
+        global varArray
+        varArray.append(var)
+        return True
+
+#########################################################
+# CHECK IF VARIABLE IS IN THE LIST OF CREATED VARIABLES #
+#########################################################
+def checkForVarInList(var):
+    if (var in varArray):
+        return True
+    else:
+        return False
 
 #####################################
 # WRITE THE ERROR TO THE ERROR FILE #
