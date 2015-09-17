@@ -1,10 +1,13 @@
 Start
 	Program
 		AssignStatement
-			ID,valx
+			ID,valy
 			FloatExpression
-				FLOAT_LITERAL,12
+				FLOAT_LITERAL,45
 		AssignStatement
-			ID,valx
-			FloatExpression
-				FLOAT_LITERAL,13
+			ID,valz
+			AddExpression
+				FloatExpression
+					FLOAT_LITERAL,34
+				IdentifierExpression
+					ID,valx

@@ -68,6 +68,11 @@ def semanticAnalysis(file):
                 print("semantic error on line " + str(lineCount))
                 writeToErrorFile("semantic error on line " + str(lineCount))
             isAssignment = False
+        # if the variable being used has not been instatiated yet
+        elif (line.strip().split(',')[0] == "ID"):
+            if (checkForVarInList(line.split(',')[1]) == False):
+                print("semantic error on line " + str(lineCount))
+                writeToErrorFile("semantic error on line " + str(lineCount))
         # notifying check that the next variable is an assignment variable
         if (line.strip() == "AssignStatement"):
             isAssignment = True
@@ -107,7 +112,6 @@ def writeToErrorFile(errorMessage):
 if __name__ == '__main__':
     #readFromFile(fileName)
     #runLexer (fileName)
-    global fileName
     fileName = sys.argv[1]
     readFromFile(sys.argv[1])
     runLexer(sys.argv[1])
