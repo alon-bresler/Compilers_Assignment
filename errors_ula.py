@@ -104,5 +104,7 @@ def writeToErrorFile(errorMessage):
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile(fileName)
-    runLexer (fileName)
+    #readFromFile(fileName)
+    #runLexer (fileName)
+    readFromFile(sys.argv[1])
+    runLexer (sys.argv[1])
