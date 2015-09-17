@@ -4,6 +4,8 @@ import sys
 import lex_ula
 import parse_ula
 
+fileName = 'ula_error_samples/testError.ula'
+
 #######################
 # READ DATA FROM FILE #
 #######################
@@ -19,9 +21,16 @@ def readFromFile(file):
 def runLexer(file):
     lex_ula.programName = file
     lex_ula.readFromFile(file)
+    writeToErrorFile(lex_ula.errorMessage)
 
+def writeToErrorFile(errorMessage):
+    #open the file
+    words = fileName.split('.')
+    f = open(words[0] + ".err", 'w')
+    f.write(errorMessage)
+    f.close()
 
 #RUN MAIN
 if __name__ == '__main__':
-    readFromFile('ula_error_samples/testError.ula')
-    runLexer ('ula_error_samples/testError.ula')
+    readFromFile(fileName)
+    runLexer (fileName)
