@@ -57,15 +57,20 @@ def semanticAnalysis(file):
     f = open(words[0] + ".ast", 'r')
 
     isAssignment = False
+    lineCount = 0
 
     for line in f:
+        # if this variable is being assigned (left of = sign)
         if (isAssignment):
             ID = line.split(',')
-            if (addVarToList(ID[1]) == False):
-                print("error")
+            if (addVarToList(ID[1]) == False): # if cannot add variable to list of variables because it already exists
+                print("semantic error on line " + str(lineCount))
+                writeToErrorFile("semantic error on line " + str(lineCount))
             isAssignment = False
+        # notifying check that the next variable is an assignment variable
         if (line.strip() == "AssignStatement"):
             isAssignment = True
+            lineCount += 1
 
 ##################################################
 # ADD NEW VARIABLE NAME TO THE LIST OF VARIABLES #
