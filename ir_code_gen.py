@@ -2,7 +2,12 @@ from llvmlite import ir
 from ctypes import CFUNCTYPE, c_float
 import llvmlite.binding as llvm
 
-tree = ["Program", ["=", ["a"], ["+", ["1"], ["2"]]]] # compact ast
+# All these initializations are required for code generation!
+llvm.initialize()
+llvm.initialize_native_target()
+llvm.initialize_native_asmprinter()  # yes, even this one
+
+tree = ["Program", ["=", ["a"], ["@", ["111"], ["2"]]]] # compact ast
 last_var = "" # keeps track of the last var assigned
 var_dict = {}  # var names associated with memory location
 
@@ -15,8 +20,14 @@ def code_gen(tree): # traverse tree recursively to generate code
         last_var = tree[1][0]
         var_dict[last_var] = builder.alloca(ir.FloatType())                             ## builder.alloca --> statically allocate stack slot for size va;ues of type typ.
         builder.store(code_gen(tree[2]), var_dict[last_var])                            ## buidler.store --> Store value to pointer ptr
-    elif tree[0] == "+":
+    elif tree[0] == "@":
         return(builder.fadd(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fadd --> floating-point added to LHS and RHS
+    elif tree[0] == "$":
+        return(builder.fsub(code_gen(tree[1]),code_gen(tree[2])))                       ## buidler.fsub --> floating-point subtract RHS from LHS
+    elif tree[0] == "#":
+        return(builder.fmul(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fmul --> floating-point multiply LHS with RHS
+    elif tree[0] == "&":
+        return(builder.fdiv(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fdiv --> floating-point divide LHS by RHS
     elif tree[0].isnumeric():
         return(ir.Constant(ir.FloatType(), float(tree[0])))
 
