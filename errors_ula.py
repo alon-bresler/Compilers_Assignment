@@ -43,6 +43,7 @@ def runParser(file):
         writeToErrorFile(parse_ula.errorMessage)
     #do the semantic analysis if there is no error in the parser
     else:
+        parse_ula.writeToFile()
         semanticAnalysis(file)
 
 #####################
