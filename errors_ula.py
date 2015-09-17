@@ -36,8 +36,20 @@ def runLexer(file):
 def runParser(file):
     parse_ula.programName = file
     parse_ula.readFromFile(file)
-    print(parse_ula.errorMessage)
-    writeToErrorFile(parse_ula.errorMessage)
+
+    #write to file if there is a parser error
+    if parse_ula.isError:
+        print(parse_ula.errorMessage)
+        writeToErrorFile(parse_ula.errorMessage)
+    #do the semantic analysis if there is no error in the parser
+    else:
+        semanticAnalysis(file)
+
+#####################
+# SEMANTIC ANALYSIS #
+#####################
+def semanticAnalysis(file):
+    print("In semantic")
 
 #####################################
 # WRITE THE ERROR TO THE ERROR FILE #
