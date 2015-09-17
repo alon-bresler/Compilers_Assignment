@@ -12,6 +12,10 @@ programName = ''
 # List of token names #
 tokens = ('FLOAT_LITERAL', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN', 'RPAREN', 'ID', 'COMMENT', 'WHITESPACE')
 
+# Keeping track of errors found #
+isError = False
+errorMessage = ""
+
 # Regular expression rules for tokens #
 t_PLUS      =   r'\@'
 t_MINUS     =   r'\$'
@@ -25,6 +29,12 @@ t_RPAREN    =   r'\)'
 def t_ID(t):
     r'[_a-zA-Z][_a-zA-Z0-9]*'
     return t
+
+# Define a rule so we can track line numbers #
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
 # Regular expression for WHITESPACE
 def t_WHITESPACE(t):
     r'\s+'
@@ -40,17 +50,18 @@ def t_FLOAT_LITERAL(t):
     r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
     return t
 
-# Define a rule so we can track line numbers #
-#def t_newline(t):
- #   r'\n+'
-  #  t.lexer.lineno += len(t.value)
-
 # A string containing ignored characters (spaces and tabs) #
 #t_ignore  = ' \t'
 
 # Error handling rule #
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print("lexical error on line " + str(t.lexer.lineno))
+
+    global isError
+    isError = True
+    global errorMessage
+    errorMessage = "lexical error on line " + str(t.lexer.lineno)
+
     t.lexer.skip(1)
 
 # Build the lexer #
@@ -67,6 +78,8 @@ def tokenize():
 
     while True:
         tok = lexer.token()
+        if isError:
+            break
         if not tok:
             break      # No more input
         #print(tok)
