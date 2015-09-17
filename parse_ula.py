@@ -10,6 +10,11 @@ import sys
 # Get the token map from the lexer (lex_ula). #
 from lex_ula import tokens
 
+# Keeping track of errors
+isError = False
+errorMessage = ""
+count = 0
+
 programName = ''
 finalString = "Start\n\tProgram"
 tabArr = ["\t", "\t", "\t"]
@@ -54,7 +59,10 @@ def p_id_expression(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    global isError
+    isError = True
+    global errorMessage
+    errorMessage = "parse error on line " + str(count)
 
 # Build the parser
 parser = yacc.yacc()
@@ -107,10 +115,14 @@ def formatResult(result):
 # Send it to the parser and print out AST in correct format
 def processLine(line):
     if (line != ''):
+        global count
+        count += 1
         global tabArr
         tabArr = ["\t", "\t", "\t"]
-        result = parser.parse(line)
-        formatResult(result)
+        if isError == False:
+            result = parser.parse(line)
+            if isError == False:
+                formatResult(result)
 
 # Read from file
 def readFromFile(file):

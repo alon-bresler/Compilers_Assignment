@@ -21,8 +21,27 @@ def readFromFile(file):
 def runLexer(file):
     lex_ula.programName = file
     lex_ula.readFromFile(file)
-    writeToErrorFile(lex_ula.errorMessage)
 
+    #write to file if there is an error
+    if lex_ula.isError:
+        print(lex_ula.errorMessage)
+        writeToErrorFile(lex_ula.errorMessage)
+    #do the parser if there was no error in the lexer
+    else:
+        runParser(file)
+
+#######################################
+# RUN THE ULA CODE THROUGH THE PARSER #
+#######################################
+def runParser(file):
+    parse_ula.programName = file
+    parse_ula.readFromFile(file)
+    print(parse_ula.errorMessage)
+    writeToErrorFile(parse_ula.errorMessage)
+
+#####################################
+# WRITE THE ERROR TO THE ERROR FILE #
+#####################################
 def writeToErrorFile(errorMessage):
     #open the file
     words = fileName.split('.')
