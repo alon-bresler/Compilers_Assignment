@@ -56,9 +56,6 @@ def writeToFile(m):
     f.write(str(m))
     f.close()
 
-def getModule():
-    return module
-
 def createIntermediateRepresentation(arg):
 
     result = ir_parser.readFromFile(arg)

@@ -3,6 +3,7 @@ import llvmlite.binding as llvm
 __author__ = 'Alon'
 
 import ir_ula
+import run_ula
 import sys
 
 # All these initializations are required for code generation!
@@ -22,7 +23,7 @@ def readInIRFile(file):
         llvm_ir = llvm_ir + line
 
 ###########################
-# WRITE OUT RESULT OF RUN #
+# WRITE OUT ASSEMBLY CODE #
 ###########################
 def writeToFile(m):
     #open the file
@@ -36,16 +37,35 @@ def writeToFile(m):
 if __name__ == '__main__':
 
     global fileName
-    #fileName = sys.argv[1]
-    fileName = 'ula_irrun_samples/add.ula'
+    fileName = sys.argv[1]
+    #fileName = 'ula_irrun_samples/add.ula'
     ir_ula.createIntermediateRepresentation(fileName)
     readInIRFile(fileName)
+    #run_ula.mainRun(fileName)
+    #mod = run_ula.getMod()
 
     #llvm_module = llvm.parse_assembly(llvm_ir)
+    #llvm_module.verify()
     #tm = llvm.Target.from_default_triple().create_target_machine()
     #engine = llvm.create_mcjit_compiler(llvm_module, tm)
     #engine.finalize_object()
     #print(llvm_module)
-    print(ir_ula.getModule())
-    asm = llvm.TargetMachine.emit_assembly(ir_ula.getModule())
-    print(asm)
+    #asm = llvm.TargetMachine.emit_assembly(mod)
+
+    # Create a target machine representing the host
+    target = llvm.Target.from_default_triple()
+    target_machine = target.create_target_machine()
+    # And an execution engine with an empty backing module
+    backing_mod = llvm.parse_assembly("")
+    engine = llvm.create_mcjit_compiler(backing_mod, target_machine)
+
+    # Create a LLVM module object from the IR
+    mod = llvm.parse_assembly(llvm_ir)
+    mod.verify()
+    # Now add the module and make sure it is ready for execution
+    engine.add_module(mod)
+    engine.finalize_object()
+
+    asm = llvm.TargetMachine.emit_assembly(target_machine, mod)
+
+    writeToFile(asm)

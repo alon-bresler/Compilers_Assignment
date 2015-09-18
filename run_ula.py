@@ -45,6 +45,7 @@ def compile_ir(engine, llvm_ir):
     The compiled module object is returned.
     """
     # Create a LLVM module object from the IR
+    global mod
     mod = llvm.parse_assembly(llvm_ir)
     mod.verify()
     # Now add the module and make sure it is ready for execution
@@ -73,17 +74,14 @@ def writeToFile(m):
     f.write(str(m))
     f.close()
 
-
-#RUN MAIN
-if __name__ == '__main__':
-
+def mainRun(file):
     global fileName
-    fileName = sys.argv[1]
-    #fileName = 'ula_irrun_samples/add.ula'
-    ir_ula.createIntermediateRepresentation(fileName)
-    readInIRFile(fileName)
+    fileName = file
+    ir_ula.createIntermediateRepresentation(file)
+    readInIRFile(file)
 
     engine = create_execution_engine()
+    global mod
     mod = compile_ir(engine, llvm_ir)
 
     # Look up the function pointer (a Python int)
@@ -93,3 +91,14 @@ if __name__ == '__main__':
     cfunc = CFUNCTYPE(c_float)(func_ptr)
     res = cfunc()
     writeToFile(res)
+
+def getMod():
+    return mod
+
+#RUN MAIN
+if __name__ == '__main__':
+
+    global fileName
+    fileName = sys.argv[1]
+    #fileName = 'ula_irrun_samples/add.ula'
+    mainRun(fileName)
