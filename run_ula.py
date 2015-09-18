@@ -1,10 +1,11 @@
 __author__ = 'Alon'
 
 from __future__ import print_function
-
 from ctypes import CFUNCTYPE, c_double
-
 import llvmlite.binding as llvm
+
+import ir_ula
+import sys
 
 
 # All these initializations are required for code generation!
@@ -12,18 +13,7 @@ llvm.initialize()
 llvm.initialize_native_target()
 llvm.initialize_native_asmprinter()  # yes, even this one
 
-llvm_ir = """
-   ; ModuleID = "examples/ir_fpadd.py"
-   target triple = "unknown-unknown-unknown"
-   target datalayout = ""
-
-   define double @"fpadd"(double %".1", double %".2")
-   {
-   entry:
-     %"res" = fadd double %".1", %".2"
-     ret double %"res"
-   }
-   """
+llvm_ir = ''
 
 def create_execution_engine():
     """
@@ -53,14 +43,21 @@ def compile_ir(engine, llvm_ir):
     engine.finalize_object()
     return mod
 
+def readInIRFile():
+    print("")
 
-engine = create_execution_engine()
-mod = compile_ir(engine, llvm_ir)
+#RUN MAIN
+if __name__ == '__main__':
 
-# Look up the function pointer (a Python int)
-func_ptr = engine.get_function_address("fpadd")
 
-# Run the function via ctypes
-cfunc = CFUNCTYPE(c_double, c_double, c_double)(func_ptr)
-res = cfunc(1.0, 3.5)
-print("fpadd(...) =", res)
+
+    engine = create_execution_engine()
+    mod = compile_ir(engine, llvm_ir)
+
+    # Look up the function pointer (a Python int)
+    func_ptr = engine.get_function_address("fpadd")
+
+    # Run the function via ctypes
+    cfunc = CFUNCTYPE(c_double, c_double, c_double)(func_ptr)
+    res = cfunc(1.0, 3.5)
+    print("fpadd(...) =", res)

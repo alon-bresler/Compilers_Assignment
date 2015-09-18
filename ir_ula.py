@@ -56,18 +56,18 @@ def writeToFile(m):
     f.write(str(m))
     f.close()
 
-#RUN MAIN
-if __name__ == '__main__':
+def createIntermediateRepresentation(arg):
 
-    result = ir_parser.readFromFile(sys.argv[1])
+    result = ir_parser.readFromFile(arg)
     global fileName
-    fileName = sys.argv[1]
+    fileName = arg
 
     flttyp = ir.FloatType() # create float type
     fnctyp = ir.FunctionType(flttyp, ()) # create function type to return a float
     module = ir.Module(name="ula") # create module named "ula"                              ## compilation unit --> defines set of related functions, global vairables and metadata.
     func = ir.Function(module, fnctyp, name="main") # create "main" function
     block = func.append_basic_block(name="entry") # create block "entry" label              ## the basic block the builder is oeprating on ##
+    global builder
     builder = ir.IRBuilder(block) # create irbuilder to generate code                       ## fill the basic blocks with LLVM instructions || has pointer to block's list of instructions
                                                                                             ## starts at the end of basic block
     #tree.insert(0, "Program")
@@ -77,3 +77,8 @@ if __name__ == '__main__':
     code_gen(tree) # call code_gen() to traverse tree & generate code
     builder.ret(builder.load(var_dict[last_var])) # specify return value
     writeToFile(module)
+
+
+#RUN MAIN
+if __name__ == '__main__':
+    createIntermediateRepresentation(sys.argv[1])
