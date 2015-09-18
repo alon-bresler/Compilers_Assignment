@@ -52,6 +52,9 @@ def compile_ir(engine, llvm_ir):
     engine.finalize_object()
     return mod
 
+#######################
+# READ IN THE IR FILE #
+#######################
 def readInIRFile(file):
     words = file.split('.')
     f = open(words[0] + ".ir", 'r')
@@ -60,6 +63,9 @@ def readInIRFile(file):
     for line in f:
         llvm_ir = llvm_ir + line
 
+###########################
+# WRITE OUT RESULT OF RUN #
+###########################
 def writeToFile(m):
     #open the file
     words = fileName.split('.')
@@ -72,8 +78,8 @@ def writeToFile(m):
 if __name__ == '__main__':
 
     global fileName
-    #fileName = sys.argv[1]
-    fileName = 'ula_irrun_samples/add.ula'
+    fileName = sys.argv[1]
+    #fileName = 'ula_irrun_samples/add.ula'
     ir_ula.createIntermediateRepresentation(fileName)
     readInIRFile(fileName)
 

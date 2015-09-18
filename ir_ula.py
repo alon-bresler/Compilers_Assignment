@@ -56,6 +56,9 @@ def writeToFile(m):
     f.write(str(m))
     f.close()
 
+def getModule():
+    return module
+
 def createIntermediateRepresentation(arg):
 
     result = ir_parser.readFromFile(arg)
@@ -64,6 +67,7 @@ def createIntermediateRepresentation(arg):
 
     flttyp = ir.FloatType() # create float type
     fnctyp = ir.FunctionType(flttyp, ()) # create function type to return a float
+    global module
     module = ir.Module(name="ula") # create module named "ula"                              ## compilation unit --> defines set of related functions, global vairables and metadata.
     func = ir.Function(module, fnctyp, name="main") # create "main" function
     block = func.append_basic_block(name="entry") # create block "entry" label              ## the basic block the builder is oeprating on ##

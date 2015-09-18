@@ -61,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/ir_ula.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+              <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -69,14 +69,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run_ula.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run_ula.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_ula.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8487208">
-              <caret line="87" column="17" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="asm_ula.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/asm_ula.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.81312567">
+              <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,8 +119,9 @@
         <option value="$PROJECT_DIR$/errors_ula.py" />
         <option value="$PROJECT_DIR$/ir_parser.py" />
         <option value="$PROJECT_DIR$/ir_code_gen.py" />
-        <option value="$PROJECT_DIR$/ir_ula.py" />
         <option value="$PROJECT_DIR$/run_ula.py" />
+        <option value="$PROJECT_DIR$/ir_ula.py" />
+        <option value="$PROJECT_DIR$/asm_ula.py" />
       </list>
     </option>
   </component>
@@ -203,24 +212,7 @@
       <recent name="C:\Users\Alon\Desktop\CSC3003S\compilers-assignment-1" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run_ula">
-    <configuration default="false" name="lex_ula" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="CompilersAssignment1" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lex_ula.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.asm_ula">
     <configuration default="false" name="parse_ula" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -285,6 +277,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="CompilersAssignment1" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run_ula.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="asm_ula" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="CompilersAssignment1" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/asm_ula.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -412,19 +421,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.lex_ula" />
-      <item index="1" class="java.lang.String" itemvalue="Python.parse_ula" />
-      <item index="2" class="java.lang.String" itemvalue="Python.errors_ula" />
-      <item index="3" class="java.lang.String" itemvalue="Python.ir_code_gen" />
-      <item index="4" class="java.lang.String" itemvalue="Python.run_ula" />
+      <item index="0" class="java.lang.String" itemvalue="Python.parse_ula" />
+      <item index="1" class="java.lang.String" itemvalue="Python.errors_ula" />
+      <item index="2" class="java.lang.String" itemvalue="Python.ir_code_gen" />
+      <item index="3" class="java.lang.String" itemvalue="Python.run_ula" />
+      <item index="4" class="java.lang.String" itemvalue="Python.asm_ula" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.run_ula" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ir_code_gen" />
-        <item index="2" class="java.lang.String" itemvalue="Python.errors_ula" />
-        <item index="3" class="java.lang.String" itemvalue="Python.parse_ula" />
-        <item index="4" class="java.lang.String" itemvalue="Python.lex_ula" />
+        <item index="0" class="java.lang.String" itemvalue="Python.asm_ula" />
+        <item index="1" class="java.lang.String" itemvalue="Python.run_ula" />
+        <item index="2" class="java.lang.String" itemvalue="Python.ir_code_gen" />
+        <item index="3" class="java.lang.String" itemvalue="Python.errors_ula" />
+        <item index="4" class="java.lang.String" itemvalue="Python.parse_ula" />
       </list>
     </recent_temporary>
   </component>
@@ -451,7 +460,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3043478" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="2045" y="318" width="756" height="479" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.3043478" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="860" y="299" width="756" height="479" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -508,16 +517,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ir_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="114" column="29" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="29" />
-          <folding>
-            <element signature="e#21#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lex_ula.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -926,16 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ir_parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="117" column="29" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
-          <folding>
-            <element signature="e#21#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/parse_ula.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -956,23 +945,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/run_ula.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ir_ula.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_ula.py">
+    <entry file="file://$PROJECT_DIR$/ir_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8487208">
-          <caret line="87" column="17" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="117" column="29" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#21#44#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asm_ula.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81312567">
+          <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
