@@ -5,6 +5,7 @@ import llvmlite.binding as llvm
 import ir_parser
 import sys
 
+
 # All these initializations are required for code generation!
 llvm.initialize()
 llvm.initialize_native_target()
@@ -79,7 +80,6 @@ def isFloat(string):
 # TRAVERSE TREE RECURSIVELY TO GENERATE CODE #
 ##############################################
 def code_gen(tree):
-    print(tree)
     global last_var
     if tree[0] == "Program":
         for t in tree[1][0:]:
@@ -102,11 +102,22 @@ def code_gen(tree):
     else:
         return (builder.load(var_dict[tree[0]]))
 
+###########################################
+# WRITE THE GENERATED CODE TO THE IF FILE #
+###########################################
+def writeToFile(m):
+    #open the file
+    words = fileName.split('.')
+    f = open(words[0] + ".ir", 'w')
+    f.write(m)
+    f.close()
 
 #RUN MAIN
 if __name__ == '__main__':
 
     result = ir_parser.readFromFile(sys.argv[1])
+    global fileName
+    fileName = sys.argv[1]
 
     flttyp = ir.FloatType() # create float type
     fnctyp = ir.FunctionType(flttyp, ()) # create function type to return a float
@@ -121,4 +132,4 @@ if __name__ == '__main__':
     tree.append(result)
     code_gen(tree) # call code_gen() to traverse tree & generate code
     builder.ret(builder.load(var_dict[last_var])) # specify return value
-    print(module)
+    writeToFile(module)
