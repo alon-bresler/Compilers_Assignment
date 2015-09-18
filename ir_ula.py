@@ -109,7 +109,7 @@ def writeToFile(m):
     #open the file
     words = fileName.split('.')
     f = open(words[0] + ".ir", 'w')
-    f.write(m)
+    f.write(str(m))
     f.close()
 
 #RUN MAIN
