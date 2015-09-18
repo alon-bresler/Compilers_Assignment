@@ -3,6 +3,7 @@ from ctypes import CFUNCTYPE, c_float, c_double
 import llvmlite.binding as llvm
 
 import ir_parser
+import sys
 
 # All these initializations are required for code generation!
 llvm.initialize()
@@ -10,7 +11,6 @@ llvm.initialize_native_target()
 llvm.initialize_native_asmprinter()  # yes, even this one
 
 #tree = ["Program", ["=", ["b"], ["@", ["1"], ["2"]]]] # compact ast
-result = ir_parser.readFromFile('ula_irrun_samples/circumference.ula')
 last_var = "" # keeps track of the last var assigned
 var_dict = {}  # var names associated with memory location
 firstPass = True
@@ -103,18 +103,22 @@ def code_gen(tree):
         return (builder.load(var_dict[tree[0]]))
 
 
+#RUN MAIN
+if __name__ == '__main__':
 
-flttyp = ir.FloatType() # create float type
-fnctyp = ir.FunctionType(flttyp, ()) # create function type to return a float
-module = ir.Module(name="ula") # create module named "ula"                              ## compilation unit --> defines set of related functions, global vairables and metadata.
-func = ir.Function(module, fnctyp, name="main") # create "main" function
-block = func.append_basic_block(name="entry") # create block "entry" label              ## the basic block the builder is oeprating on ##
-builder = ir.IRBuilder(block) # create irbuilder to generate code                       ## fill the basic blocks with LLVM instructions || has pointer to block's list of instructions
-                                                                                        ## starts at the end of basic block
-#tree.insert(0, "Program")
-#tree = ['Program'].append(tree)
-tree = ['Program']
-tree.append(result)
-code_gen(tree) # call code_gen() to traverse tree & generate code
-builder.ret(builder.load(var_dict[last_var])) # specify return value
-print(module)
+    result = ir_parser.readFromFile(sys.argv[1])
+
+    flttyp = ir.FloatType() # create float type
+    fnctyp = ir.FunctionType(flttyp, ()) # create function type to return a float
+    module = ir.Module(name="ula") # create module named "ula"                              ## compilation unit --> defines set of related functions, global vairables and metadata.
+    func = ir.Function(module, fnctyp, name="main") # create "main" function
+    block = func.append_basic_block(name="entry") # create block "entry" label              ## the basic block the builder is oeprating on ##
+    builder = ir.IRBuilder(block) # create irbuilder to generate code                       ## fill the basic blocks with LLVM instructions || has pointer to block's list of instructions
+                                                                                            ## starts at the end of basic block
+    #tree.insert(0, "Program")
+    #tree = ['Program'].append(tree)
+    tree = ['Program']
+    tree.append(result)
+    code_gen(tree) # call code_gen() to traverse tree & generate code
+    builder.ret(builder.load(var_dict[last_var])) # specify return value
+    print(module)

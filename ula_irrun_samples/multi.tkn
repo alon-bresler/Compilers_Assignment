@@ -1,0 +1,11 @@
+ID,a
+=
+FLOAT_LITERAL,1.2
+ID,b
+=
+FLOAT_LITERAL,3.4
+ID,c
+=
+ID,a
+#
+ID,b
