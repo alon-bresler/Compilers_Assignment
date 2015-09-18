@@ -32,7 +32,6 @@ def writeToFile(m):
     f.write(str(m))
     f.close()
 
-
 #RUN MAIN
 if __name__ == '__main__':
 
@@ -41,16 +40,6 @@ if __name__ == '__main__':
     #fileName = 'ula_irrun_samples/add.ula'
     ir_ula.createIntermediateRepresentation(fileName)
     readInIRFile(fileName)
-    #run_ula.mainRun(fileName)
-    #mod = run_ula.getMod()
-
-    #llvm_module = llvm.parse_assembly(llvm_ir)
-    #llvm_module.verify()
-    #tm = llvm.Target.from_default_triple().create_target_machine()
-    #engine = llvm.create_mcjit_compiler(llvm_module, tm)
-    #engine.finalize_object()
-    #print(llvm_module)
-    #asm = llvm.TargetMachine.emit_assembly(mod)
 
     # Create a target machine representing the host
     target = llvm.Target.from_default_triple()
