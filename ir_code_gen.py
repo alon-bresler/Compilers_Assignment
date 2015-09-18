@@ -2,12 +2,16 @@ from llvmlite import ir
 from ctypes import CFUNCTYPE, c_float, c_double
 import llvmlite.binding as llvm
 
+import ir_parser
+
 # All these initializations are required for code generation!
 llvm.initialize()
 llvm.initialize_native_target()
 llvm.initialize_native_asmprinter()  # yes, even this one
 
-tree = ["Program", ["=", ["a"], ["@", ["111"], ["2"]]]] # compact ast
+#tree = ["Program", ["=", ["b"], ["@", ["1"], ["2"]]]] # compact ast
+tree = ir_parser.readFromFile('ula_irrun_samples/circumference.ula')
+print(tree)
 last_var = "" # keeps track of the last var assigned
 var_dict = {}  # var names associated with memory location
 
@@ -62,12 +66,20 @@ func_ptr = engine.get_function_address("fpadd")
 # Run the function via ctypes
 cfunc = CFUNCTYPE(c_double, c_double, c_double)(func_ptr)
 res = cfunc(1.0, 3.5)
-print("fpadd(...) =", res)
+#print("fpadd(...) =", res)                                                             ## taken out for now
+
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
 
 ##############################################
 # TRAVERSE TREE RECURSIVELY TO GENERATE CODE #
 ##############################################
 def code_gen(tree):
+    print(var_dict)
     global last_var
     if tree[0] == "Program":
         for t in tree[1:]:
@@ -84,8 +96,12 @@ def code_gen(tree):
         return(builder.fmul(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fmul --> floating-point multiply LHS with RHS
     elif tree[0] == "&":
         return(builder.fdiv(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fdiv --> floating-point divide LHS by RHS
-    elif tree[0].isnumeric():
+    #elif tree[0].isnumeric():
+    elif isFloat(tree[0]):
+        print (tree[0])
         return(ir.Constant(ir.FloatType(), float(tree[0])))
+    else:
+        return (builder.load(var_dict[tree[0]]))
 
 
 flttyp = ir.FloatType() # create float type
