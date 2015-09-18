@@ -70,7 +70,7 @@ res = cfunc(1.0, 3.5)
 
 def isFloat(string):
     try:
-        float(string)
+        float(str(string))
         return True
     except ValueError:
         return False
@@ -79,10 +79,10 @@ def isFloat(string):
 # TRAVERSE TREE RECURSIVELY TO GENERATE CODE #
 ##############################################
 def code_gen(tree):
-    print(var_dict)
+    print(tree)
     global last_var
     if tree[0] == "Program":
-        for t in tree[1:]:
+        for t in tree[1][0:]:
             code_gen(t)
     elif tree[0] == "=":
         last_var = tree[1][0]
@@ -98,10 +98,10 @@ def code_gen(tree):
         return(builder.fdiv(code_gen(tree[1]),code_gen(tree[2])))                       ## builder.fdiv --> floating-point divide LHS by RHS
     #elif tree[0].isnumeric():
     elif isFloat(tree[0]):
-        print (tree[0])
         return(ir.Constant(ir.FloatType(), float(tree[0])))
     else:
         return (builder.load(var_dict[tree[0]]))
+
 
 
 flttyp = ir.FloatType() # create float type
@@ -115,7 +115,6 @@ builder = ir.IRBuilder(block) # create irbuilder to generate code               
 #tree = ['Program'].append(tree)
 tree = ['Program']
 tree.append(result)
-print (tree)
 code_gen(tree) # call code_gen() to traverse tree & generate code
 builder.ret(builder.load(var_dict[last_var])) # specify return value
 print(module)

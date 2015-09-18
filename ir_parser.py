@@ -16,6 +16,8 @@ programName = ''
 finalString = "Start\n\tProgram"
 tabArr = ["\t", "\t", "\t"]
 
+returnArr = []
+
 # Setting precedence and associativity #
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -69,7 +71,9 @@ parser = yacc.yacc()
 def processLine(line):
     if (line != ''):
         result = parser.parse(line)
-        return result
+        #temp = ['Program']
+        #temp.append(result)
+        returnArr.append(result)
             #if isError == False:
                # formatResult(result)       ##DONT NEED TO FORMAT RESULT
 
@@ -103,7 +107,8 @@ def readFromFile(file):
            lineForProcessing = dataArr[i]
         else:
             lineForProcessing = lineForProcessing + dataArr[i]
-   return processLine(lineForProcessing + dataArr[len(dataArr)-1])
+   processLine(lineForProcessing + dataArr[len(dataArr)-1])
+   return returnArr
 
 #RUN MAIN
 if __name__ == '__main__':
